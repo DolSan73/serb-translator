@@ -26,19 +26,682 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
       with:
         gradle-version: 8.5
+        cache-read-only: false
 
-    - name: Unpack Android Project
+    - name: Generate Android Project Files
       run: |
-        echo "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" | base64 -d | tar -xz
+        mkdir -p app/src/main/java/com/translator/serbia
+        mkdir -p app/src/main/res/layout
+        mkdir -p app/src/main/res/values
 
-    - name: Commit Source Files to Repo
-      continue-on-error: true
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        git add settings.gradle gradle.properties build.gradle app/
-        git commit -m "Auto-generate source code files" || echo "Nothing to commit"
-        git push || echo "Git push skipped"
+        cat > settings.gradle << 'EOF'
+        pluginManagement {
+            repositories {
+                google()
+                mavenCentral()
+                gradlePluginPortal()
+            }
+        }
+        dependencyResolutionManagement {
+            repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+            repositories {
+                google()
+                mavenCentral()
+            }
+        }
+        rootProject.name = "SerbVoiceTranslator"
+        include ':app'
+        EOF
+
+        cat > build.gradle << 'EOF'
+        plugins {
+            id 'com.android.application' version '8.2.2' apply false
+            id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+        }
+        EOF
+
+        cat > gradle.properties << 'EOF'
+        org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+        android.useAndroidX=true
+        android.nonTransitiveRClass=true
+        EOF
+
+        cat > app/build.gradle << 'EOF'
+        plugins {
+            id 'com.android.application'
+            id 'org.jetbrains.kotlin.android'
+        }
+
+        android {
+            namespace 'com.translator.serbia'
+            compileSdk 34
+
+            defaultConfig {
+                applicationId "com.translator.serbia"
+                minSdk 26
+                targetSdk 34
+                versionCode 1
+                versionName "1.0"
+            }
+
+            buildTypes {
+                release {
+                    minifyEnabled false
+                }
+            }
+            compileOptions {
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
+            }
+            kotlinOptions {
+                jvmTarget = '17'
+            }
+            buildFeatures {
+                viewBinding true
+            }
+        }
+
+        dependencies {
+            implementation 'androidx.core:core-ktx:1.12.0'
+            implementation 'androidx.appcompat:appcompat:1.6.1'
+            implementation 'com.google.android.material:material:1.11.0'
+            implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+            implementation 'androidx.recyclerview:recyclerview:1.3.2'
+            implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+        }
+        EOF
+
+        cat > app/src/main/AndroidManifest.xml << 'EOF'
+        <?xml version="1.0" encoding="utf-8"?>
+        <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+            <application
+                android:allowBackup="true"
+                android:icon="@android:drawable/ic_btn_speak_now"
+                android:label="Переводчик Сербия"
+                android:roundIcon="@android:drawable/ic_btn_speak_now"
+                android:supportsRtl="true"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                <activity
+                    android:name=".MainActivity"
+                    android:exported="true"
+                    android:windowSoftInputMode="adjustResize">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+                </activity>
+            </application>
+        </manifest>
+        EOF
+
+        cat > app/src/main/res/values/strings.xml << 'EOF'
+        <resources>
+            <string name="app_name">Переводчик Сербия</string>
+        </resources>
+        EOF
+
+        cat > app/src/main/res/layout/activity_main.xml << 'EOF'
+        <?xml version="1.0" encoding="utf-8"?>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#F0F2F5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Переводчик Сербия"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121" />
+
+                <Button
+                    android:id="@+id/btnCopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Копировать"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="6dp" />
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Очистить"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:text="Готов к работе. Подключите наушник и нажмите кнопку."
+                android:textSize="14sp"
+                android:textColor="#424242"
+                android:background="#E0E0E0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMessages"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:clipToPadding="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:background="#FFFFFF"
+                android:elevation="8dp">
+
+                <Button
+                    android:id="@+id/btnSerbSpeak"
+                    android:layout_width="0dp"
+                    android:layout_height="76dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:backgroundTint="#2E7D32"
+                    android:text="СЕРБ ГОВОРИТ&#10;(в наушник)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnMeSpeak"
+                    android:layout_width="0dp"
+                    android:layout_height="76dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:backgroundTint="#1565C0"
+                    android:text="Я ГОВОРЮ&#10;(в динамик)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+        </LinearLayout>
+        EOF
+
+        cat > app/src/main/res/layout/item_message.xml << 'EOF'
+        <?xml version="1.0" encoding="utf-8"?>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/cardLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp"
+            android:background="#FFFFFF"
+            android:elevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvSender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="#888888" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvOriginal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="15sp"
+                android:textColor="#616161" />
+
+            <TextView
+                android:id="@+id/tvTranslated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#111111" />
+        </LinearLayout>
+        EOF
+
+        cat > app/src/main/java/com/translator/serbia/MessageModel.kt << 'EOF'
+        package com.translator.serbia
+
+        data class MessageModel(
+            val sender: String,
+            val originalText: String,
+            val translatedText: String,
+            val time: String,
+            val isFromSerb: Boolean
+        )
+        EOF
+
+        cat > app/src/main/java/com/translator/serbia/MessageAdapter.kt << 'EOF'
+        package com.translator.serbia
+
+        import android.graphics.Color
+        import android.view.LayoutInflater
+        import android.view.View
+        import android.view.ViewGroup
+        import android.widget.TextView
+        import androidx.recyclerview.widget.RecyclerView
+
+        class MessageAdapter(private val messages: MutableList<MessageModel>) :
+            RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
+
+            class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+                val cardLayout: View = view.findViewById(R.id.cardLayout)
+                val tvSender: TextView = view.findViewById(R.id.tvSender)
+                val tvTime: TextView = view.findViewById(R.id.tvTime)
+                val tvOriginal: TextView = view.findViewById(R.id.tvOriginal)
+                val tvTranslated: TextView = view.findViewById(R.id.tvTranslated)
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
+                return ViewHolder(view)
+            }
+
+            override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+                val item = messages[position]
+                holder.tvSender.text = item.sender
+                holder.tvTime.text = item.time
+                holder.tvOriginal.text = "Оригинал: ${item.originalText}"
+                holder.tvTranslated.text = "Перевод: ${item.translatedText}"
+
+                if (item.isFromSerb) {
+                    holder.cardLayout.setBackgroundColor(Color.parseColor("#E8F5E9"))
+                    holder.tvSender.setTextColor(Color.parseColor("#2E7D32"))
+                } else {
+                    holder.cardLayout.setBackgroundColor(Color.parseColor("#E3F2FD"))
+                    holder.tvSender.setTextColor(Color.parseColor("#1565C0"))
+                }
+            }
+
+            override fun getItemCount() = messages.size
+
+            fun addMessage(msg: MessageModel) {
+                messages.add(msg)
+                notifyItemInserted(messages.size - 1)
+            }
+
+            fun clearAll() {
+                val count = messages.size
+                messages.clear()
+                notifyItemRangeRemoved(0, count)
+            }
+
+            fun getAllText(): String {
+                val sb = StringBuilder()
+                for (m in messages) {
+                    sb.append("[${m.time}] ${m.sender}:\n")
+                    sb.append("Оригинал: ${m.originalText}\n")
+                    sb.append("Перевод: ${m.translatedText}\n\n")
+                }
+                return sb.toString()
+            }
+        }
+        EOF
+
+        cat > app/src/main/java/com/translator/serbia/MainActivity.kt << 'EOF'
+        package com.translator.serbia
+
+        import android.Manifest
+        import android.content.ClipData
+        import android.content.ClipboardManager
+        import android.content.Context
+        import android.content.Intent
+        import android.content.pm.PackageManager
+        import android.media.AudioDeviceInfo
+        import android.media.AudioManager
+        import android.os.Build
+        import android.os.Bundle
+        import android.speech.RecognitionListener
+        import android.speech.RecognizerIntent
+        import android.speech.SpeechRecognizer
+        import android.speech.tts.TextToSpeech
+        import android.speech.tts.UtteranceProgressListener
+        import android.widget.Button
+        import android.widget.TextView
+        import android.widget.Toast
+        import androidx.appcompat.app.AppCompatActivity
+        import androidx.core.app.ActivityCompat
+        import androidx.core.content.ContextCompat
+        import androidx.recyclerview.widget.LinearLayoutManager
+        import androidx.recyclerview.widget.RecyclerView
+        import kotlinx.coroutines.CoroutineScope
+        import kotlinx.coroutines.Dispatchers
+        import kotlinx.coroutines.launch
+        import kotlinx.coroutines.withContext
+        import org.json.JSONArray
+        import java.net.HttpURLConnection
+        import java.net.URL
+        import java.net.URLEncoder
+        import java.text.SimpleDateFormat
+        import java.util.Date
+        import java.util.Locale
+
+        class MainActivity : AppCompatActivity() {
+
+            private lateinit var tvStatus: TextView
+            private lateinit var rvMessages: RecyclerView
+            private lateinit var btnSerbSpeak: Button
+            private lateinit var btnMeSpeak: Button
+            private lateinit var btnCopy: Button
+            private lateinit var btnClear: Button
+
+            private lateinit var adapter: MessageAdapter
+            private val messagesList = mutableListOf<MessageModel>()
+
+            private var speechRecognizer: SpeechRecognizer? = null
+            private var tts: TextToSpeech? = null
+            private var isTtsReady = false
+
+            private var currentModeIsSerb = false
+
+            private val REQUEST_PERMISSIONS = 101
+
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.activity_main)
+
+                tvStatus = findViewById(R.id.tvStatus)
+                rvMessages = findViewById(R.id.rvMessages)
+                btnSerbSpeak = findViewById(R.id.btnSerbSpeak)
+                btnMeSpeak = findViewById(R.id.btnMeSpeak)
+                btnCopy = findViewById(R.id.btnCopy)
+                btnClear = findViewById(R.id.btnClear)
+
+                adapter = MessageAdapter(messagesList)
+                rvMessages.layoutManager = LinearLayoutManager(this).apply {
+                    stackFromEnd = true
+                }
+                rvMessages.adapter = adapter
+
+                checkPermissions()
+                initTTS()
+                initSpeechRecognizer()
+
+                btnSerbSpeak.setOnClickListener {
+                    startListeningSession(isSerb = true)
+                }
+
+                btnMeSpeak.setOnClickListener {
+                    startListeningSession(isSerb = false)
+                }
+
+                btnCopy.setOnClickListener {
+                    val fullText = adapter.getAllText()
+                    if (fullText.isNotEmpty()) {
+                        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("Диалог", fullText)
+                        clipboard.setPrimaryClip(clip)
+                        Toast.makeText(this, "Диалог скопирован в буфер обмена!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "История диалога пуста", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                btnClear.setOnClickListener {
+                    adapter.clearAll()
+                    tvStatus.text = "История очищена."
+                }
+            }
+
+            private fun checkPermissions() {
+                val needed = mutableListOf<String>()
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    needed.add(Manifest.permission.RECORD_AUDIO)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                        needed.add(Manifest.permission.BLUETOOTH_CONNECT)
+                    }
+                }
+                if (needed.isNotEmpty()) {
+                    ActivityCompat.requestPermissions(this, needed.toTypedArray(), REQUEST_PERMISSIONS)
+                }
+            }
+
+            private fun initTTS() {
+                tts = TextToSpeech(this) { status ->
+                    if (status == TextToSpeech.SUCCESS) {
+                        isTtsReady = true
+                    }
+                }
+
+                tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) {}
+                    override fun onDone(utteranceId: String?) {
+                        runOnUiThread {
+                            resetAudioRouting()
+                            tvStatus.text = "Готов к следующей реплике."
+                        }
+                    }
+                    override fun onError(utteranceId: String?) {
+                        runOnUiThread {
+                            resetAudioRouting()
+                        }
+                    }
+                })
+            }
+
+            private fun initSpeechRecognizer() {
+                if (SpeechRecognizer.isRecognitionAvailable(this)) {
+                    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
+                    speechRecognizer?.setRecognitionListener(object : RecognitionListener {
+                        override fun onReadyForSpeech(params: Bundle?) {
+                            tvStatus.text = if (currentModeIsSerb) "Слушаю сербскую речь..." else "Слушаю русскую речь..."
+                        }
+                        override fun onBeginningOfSpeech() {
+                            tvStatus.text = "Запись речи..."
+                        }
+                        override fun onRmsChanged(rmsdB: Float) {}
+                        override fun onBufferReceived(buffer: ByteArray?) {}
+                        override fun onEndOfSpeech() {
+                            tvStatus.text = "Обработка и перевод..."
+                        }
+                        override fun onError(error: Int) {
+                            tvStatus.text = "Ошибка записи ($error). Попробуйте еще раз."
+                        }
+                        override fun onResults(results: Bundle?) {
+                            val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                            val recognized = matches?.firstOrNull() ?: ""
+                            if (recognized.isNotBlank()) {
+                                handleRecognitionResult(recognized, currentModeIsSerb)
+                            } else {
+                                tvStatus.text = "Речь не распознана. Попробуйте еще раз."
+                            }
+                        }
+                        override fun onPartialResults(partialResults: Bundle?) {}
+                        override fun onEvent(eventType: Int, params: Bundle?) {}
+                    })
+                } else {
+                    Toast.makeText(this, "Распознавание речи недоступно на устройстве", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            private fun startListeningSession(isSerb: Boolean) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    checkPermissions()
+                    return
+                }
+
+                currentModeIsSerb = isSerb
+                val langCode = if (isSerb) "sr-RS" else "ru-RU"
+
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                    putExtra(RecognizerIntent.EXTRA_LANGUAGE, langCode)
+                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, langCode)
+                    putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, langCode)
+                }
+
+                try {
+                    speechRecognizer?.startListening(intent)
+                } catch (e: Exception) {
+                    tvStatus.text = "Ошибка запуска микрофона: ${e.message}"
+                }
+            }
+
+            private fun handleRecognitionResult(text: String, fromSerb: Boolean) {
+                val fromLang = if (fromSerb) "sr" else "ru"
+                val toLang = if (fromSerb) "ru" else "sr"
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    tvStatus.text = "Перевожу..."
+                    val translated = translateText(text, fromLang, toLang)
+
+                    val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+                    val sender = if (fromSerb) "Серб" else "Вы"
+
+                    val msg = MessageModel(
+                        sender = sender,
+                        originalText = text,
+                        translatedText = translated,
+                        time = time,
+                        isFromSerb = fromSerb
+                    )
+                    adapter.addMessage(msg)
+                    rvMessages.smoothScrollToPosition(adapter.itemCount - 1)
+
+                    if (fromSerb) {
+                        tvStatus.text = "Воспроизведение перевода в наушник..."
+                        playAudioToEarphone(translated, "ru")
+                    } else {
+                        tvStatus.text = "Озвучивание в динамик телефона..."
+                        playAudioToSpeaker(translated, "sr")
+                    }
+                }
+            }
+
+            private suspend fun translateText(text: String, from: String, to: String): String = withContext(Dispatchers.IO) {
+                try {
+                    val encoded = URLEncoder.encode(text, "UTF-8")
+                    val url = URL("https://translate.googleapis.com/translate_a/single?client=gtx&sl=$from&tl=$to&dt=t&q=$encoded")
+                    val conn = url.openConnection() as HttpURLConnection
+                    conn.requestMethod = "GET"
+                    conn.setRequestProperty("User-Agent", "Mozilla/5.0")
+                    conn.connectTimeout = 6000
+                    conn.readTimeout = 6000
+
+                    val response = conn.inputStream.bufferedReader().use { it.readText() }
+                    val root = JSONArray(response)
+                    val sentences = root.getJSONArray(0)
+                    val sb = StringBuilder()
+                    for (i in 0 until sentences.length()) {
+                        val row = sentences.optJSONArray(i)
+                        if (row != null && row.length() > 0) {
+                            val part = row.optString(0)
+                            if (part != null) sb.append(part)
+                        }
+                    }
+                    sb.toString()
+                } catch (e: Exception) {
+                    "Ошибка перевода: ${e.message}"
+                }
+            }
+
+            private fun playAudioToSpeaker(text: String, lang: String) {
+                if (!isTtsReady) return
+                val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val speaker = audioManager.availableCommunicationDevices.firstOrNull {
+                        it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
+                    }
+                    if (speaker != null) {
+                        audioManager.setCommunicationDevice(speaker)
+                    }
+                } else {
+                    audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
+                    audioManager.isSpeakerphoneOn = true
+                }
+
+                tts?.language = Locale(lang, if (lang == "sr") "RS" else "RU")
+                tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "UTTERANCE_SPEAKER")
+            }
+
+            private fun playAudioToEarphone(text: String, lang: String) {
+                if (!isTtsReady) return
+                val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val headset = audioManager.availableCommunicationDevices.firstOrNull {
+                        it.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO ||
+                        it.type == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP ||
+                        it.type == AudioDeviceInfo.TYPE_BLE_HEADSET ||
+                        it.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
+                        it.type == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
+                    }
+                    if (headset != null) {
+                        audioManager.setCommunicationDevice(headset)
+                    } else {
+                        audioManager.clearCommunicationDevice()
+                    }
+                } else {
+                    audioManager.isSpeakerphoneOn = false
+                    audioManager.mode = AudioManager.MODE_NORMAL
+                }
+
+                tts?.language = Locale(lang, if (lang == "sr") "RS" else "RU")
+                tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "UTTERANCE_EARPHONE")
+            }
+
+            private fun resetAudioRouting() {
+                val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    audioManager.clearCommunicationDevice()
+                } else {
+                    audioManager.isSpeakerphoneOn = false
+                    audioManager.mode = AudioManager.MODE_NORMAL
+                }
+            }
+
+            override fun onDestroy() {
+                speechRecognizer?.destroy()
+                tts?.stop()
+                tts?.shutdown()
+                resetAudioRouting()
+                super.onDestroy()
+            }
+        }
+        EOF
 
     - name: Build APK with Gradle
       run: gradle assembleDebug --no-daemon
@@ -48,4 +711,3 @@ jobs:
       with:
         name: VoiceTranslator-APK
         path: app/build/outputs/apk/debug/app-debug.apk
-        
