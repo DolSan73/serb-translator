@@ -191,7 +191,7 @@ jobs:
                     android:textSize="12sp" />
             </LinearLayout>
 
-            <!-- Кнопка постоянного авто-слушания (свободные руки) -->
+            <!-- Кнопка авто-слушания -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -599,7 +599,6 @@ jobs:
             private fun startContinuousListening() {
                 isContinuousListening = true
                 btnToggleAuto.text = "🛑 РЕЖИМ «СВОБОДНЫЕ РУКИ»: ВКЛ"
-                btnToggleAuto.setBackgroundColor(android.graphics.Color.parseColor("#C62828"))
                 tvStatus.text = "Режим включен. Говорите «Переведи ... всё»"
                 restartListeningIfNeeded()
             }
@@ -607,7 +606,6 @@ jobs:
             private fun stopContinuousListening() {
                 isContinuousListening = false
                 btnToggleAuto.text = "🎙️ РЕЖИМ «СВОБОДНЫЕ РУКИ»: ВЫКЛ"
-                btnToggleAuto.setBackgroundColor(android.graphics.Color.parseColor("#455A64"))
                 tvStatus.text = "Режим выключен."
                 try {
                     speechRecognizer?.stopListening()
@@ -628,9 +626,8 @@ jobs:
                 val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ru-RU")
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        putExtra(RecognizerIntent.EXTRA_ADDITIONAL_LANGUAGES, arrayOf("sr-RS", "ru-RU"))
-                    }
+                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ru-RU")
+                    putStringArrayListExtra("android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES", arrayListOf("sr-RS", "ru-RU"))
                 }
 
                 try {
@@ -644,14 +641,12 @@ jobs:
                 var text = rawText.trim()
                 var isExplicitRussian = false
 
-                // Проверяем триггер-фразу «переведи»
                 val lower = text.lowercase(Locale.getDefault())
                 if (lower.startsWith("переведи") || lower.startsWith("перевести") || lower.startsWith("преведи")) {
                     isExplicitRussian = true
                     text = text.replaceFirst(Regex("^(переведи|перевести|преведи)\\s*", RegexOption.IGNORE_CASE), "")
                 }
 
-                // Проверяем окончание фразы «всё» или «все»
                 if (text.lowercase(Locale.getDefault()).endsWith("всё") || text.lowercase(Locale.getDefault()).endsWith("все")) {
                     isExplicitRussian = true
                     text = text.replace(Regex("\\s*(всё|все)$", RegexOption.IGNORE_CASE), "")
@@ -682,11 +677,9 @@ jobs:
                     rvMessages.smoothScrollToPosition(adapter.itemCount - 1)
 
                     if (isFromMe) {
-                        // Моя русская речь -> сербский громко в ДИНАМИК ТЕЛЕФОНА
                         tvStatus.text = "Озвучиваю сербу в динамик..."
                         playAudioToSpeaker(translatedText, "sr")
                     } else {
-                        // Сербская речь -> русский ТОЛЬКО В НАУШНИК
                         tvStatus.text = "Перевод вам в наушник..."
                         playAudioToEarphone(translatedText, "ru")
                     }
@@ -695,21 +688,17 @@ jobs:
 
             private suspend fun autoTranslate(text: String, isExplicitRussian: Boolean): Pair<String, String> = withContext(Dispatchers.IO) {
                 try {
-                    // Если пользователь явно сказал «переведи ... всё» - это 100% русский
                     if (isExplicitRussian) {
                         val tr = translateQuery(text, "ru", "sr")
                         return@withContext Pair("ru", tr.second)
                     }
 
-                    // Иначе автоопределение: сначала пробуем sl=auto&tl=sr
                     val first = translateQuery(text, "auto", "sr")
                     val detected = first.first
 
                     if (detected == "ru") {
-                        // Распознан русский -> перевод на сербский готов
                         Pair("ru", first.second)
                     } else {
-                        // Распознан сербский -> переводим на русский
                         val second = translateQuery(text, "sr", "ru")
                         Pair("sr", second.second)
                     }
@@ -743,16 +732,13 @@ jobs:
                 return Pair(detected, sb.toString())
             }
 
-            // ПРИНУДИТЕЛЬНОЕ ВОСПРОИЗВЕДЕНИЕ В ДИНАМИК ТЕЛЕФОНА
             private fun playAudioToSpeaker(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-                // 1. Режим голосовой связи и принудительный громкоговоритель
                 audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
                 audioManager.isSpeakerphoneOn = true
 
-                // 2. Для Android 12+ принудительно устанавливаем BUILTIN_SPEAKER
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     val speaker = audioManager.availableCommunicationDevices.firstOrNull {
                         it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
@@ -762,7 +748,6 @@ jobs:
                     }
                 }
 
-                // 3. Задаем атрибуты потока связи
                 val audioAttributes = AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -770,22 +755,19 @@ jobs:
                 tts?.setAudioAttributes(audioAttributes)
 
                 val params = Bundle().apply {
-                    putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, AudioManager.STREAM_VOICE_CALL)
+                    putInt("streamType", AudioManager.STREAM_VOICE_CALL)
                 }
 
                 tts?.language = Locale(lang, if (lang == "sr") "RS" else "RU")
                 tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UTTERANCE_SPEAKER")
             }
 
-            // ПРИНУДИТЕЛЬНОЕ ВОСПРОИЗВЕДЕНИЕ В НАУШНИК
             private fun playAudioToEarphone(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-                // Выключаем громкоговоритель
                 audioManager.isSpeakerphoneOn = false
 
-                // Направляем в гарнитуру/наушники
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     val headset = audioManager.availableCommunicationDevices.firstOrNull {
                         it.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO ||
