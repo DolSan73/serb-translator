@@ -1,4 +1,4 @@
-name: Build Voice Translator v5 Offline APK
+name: Build Voice Translator v6 APK
 
 on:
   push:
@@ -33,6 +33,116 @@ jobs:
         mkdir -p app/src/main/java/com/translator/serbia
         mkdir -p app/src/main/res/layout
         mkdir -p app/src/main/res/values
+
+        cat > app/debug.keystore.b64 << 'EOF'
+        MIIKZgIBAzCCChAGCSqGSIb3DQEHAaCCCgEEggn9MIIJ+TCCBc4GCSqGSIb3DQEHBqCCBc8w
+        ggXLAgEAMIIFwwYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQI3s/Q0aEwY/0CAggAgIIF
+        kL0b16zUf3Wp7v2a/93yqC4f8pUfW9yY3e7uQh0h3U7u7/6i9o6m5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8
+        p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2
+        eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY
+        /c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c
+        6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i
+        2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r
+        5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5a
+        ZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZt
+        T/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/
+        2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2a
+        K7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7
+        K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+
+        h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5
+        f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1
+        aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY
+        8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+
+        m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6h8p2eY/c6i2r5aZtT/2aK7K+h5f1aY8+m6
+        EOF
+        base64 -d app/debug.keystore.b64 > app/debug.keystore
 
         cat > settings.gradle << 'EOF'
         pluginManagement {
@@ -80,11 +190,23 @@ jobs:
                 applicationId "com.translator.serbia"
                 minSdk 26
                 targetSdk 34
-                versionCode 5
-                versionName "5.0"
+                versionCode 6
+                versionName "6.0"
+            }
+
+            signingConfigs {
+                debug {
+                    storeFile file("debug.keystore")
+                    storePassword "android"
+                    keyAlias "androiddebugkey"
+                    keyPassword "android"
+                }
             }
 
             buildTypes {
+                debug {
+                    signingConfig signingConfigs.debug
+                }
                 release {
                     minifyEnabled false
                 }
@@ -123,6 +245,7 @@ jobs:
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+            <uses-permission android:name="android.permission.VIBRATE" />
 
             <application
                 android:allowBackup="true"
@@ -158,7 +281,7 @@ jobs:
             android:orientation="vertical"
             android:background="#F0F2F5">
 
-            <!-- Верхняя строка: Заголовок и кнопки действий -->
+            <!-- Верхняя панель: Заголовок и меню -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,7 +295,7 @@ jobs:
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="🇷🇸 Переводчик v5"
+                    android:text="🇷🇸 Переводчик v6"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:textColor="#212121" />
@@ -180,29 +303,38 @@ jobs:
                 <Button
                     android:id="@+id/btnDownloadOffline"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="34dp"
                     android:text="📥 Офлайн"
-                    android:textSize="11sp"
-                    android:layout_marginEnd="4dp"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="3dp"
                     android:backgroundTint="#546E7A" />
+
+                <Button
+                    android:id="@+id/btnDictionary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="📖 Словарь"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="3dp"
+                    android:backgroundTint="#00796B" />
 
                 <Button
                     android:id="@+id/btnCopy"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="34dp"
                     android:text="Копия"
-                    android:textSize="11sp"
-                    android:layout_marginEnd="4dp" />
+                    android:textSize="10sp"
+                    android:layout_marginEnd="3dp" />
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="34dp"
                     android:text="Сброс"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
-            <!-- Вторая строка: Переключатель авто-ответа -->
+            <!-- Вторая строка: Авто-ответ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -231,7 +363,7 @@ jobs:
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:gravity="center"
-                android:text="Готов. Онлайн и офлайн режим активны."
+                android:text="Готов к работе. Скажите «Переведи» (сербу) или «Преведи» (в наушник)."
                 android:textSize="12sp"
                 android:textColor="#37474F"
                 android:background="#CFD8DC" />
@@ -244,6 +376,94 @@ jobs:
                 android:layout_weight="1"
                 android:padding="8dp"
                 android:clipToPadding="false" />
+
+            <!-- Лента быстрых рабочих фраз в 1 клик -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E0E0E0"
+                android:padding="4dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/layoutQuickPhrases"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/qp1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Помоги поднять"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Где инструмент?"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Какой размер?"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Я закончил"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Ещё раз"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Спасибо"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Подожди минуту"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+
+                    <Button
+                        android:id="@+id/qp8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Где чертёж?"
+                        android:textSize="11sp"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#455A64" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <!-- Блок ввода и редактирования текста -->
             <LinearLayout
@@ -270,7 +490,7 @@ jobs:
                         android:layout_weight="1"
                         android:minLines="2"
                         android:maxLines="4"
-                        android:hint="Текст здесь (можно надиктовать голосом или исправить клавиатурой)..."
+                        android:hint="Текст здесь (можно надиктовать или исправить клавиатурой)..."
                         android:textSize="14sp"
                         android:textColor="#212121"
                         android:textColorHint="#757575"
@@ -366,7 +586,29 @@ jobs:
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:textColor="#888888" />
+                    android:textColor="#888888"
+                    android:layout_marginEnd="6dp" />
+
+                <!-- Кнопка повтора озвучки -->
+                <Button
+                    android:id="@+id/btnReplay"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:text="🔊"
+                    android:textSize="14sp"
+                    android:padding="0dp"
+                    android:backgroundTint="#90A4AE"
+                    android:layout_marginEnd="4dp" />
+
+                <!-- Кнопка крупного текста для серба -->
+                <Button
+                    android:id="@+id/btnFullscreen"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:text="🔍"
+                    android:textSize="14sp"
+                    android:padding="0dp"
+                    android:backgroundTint="#0288D1" />
             </LinearLayout>
 
             <TextView
@@ -407,11 +649,15 @@ jobs:
         import android.view.LayoutInflater
         import android.view.View
         import android.view.ViewGroup
+        import android.widget.Button
         import android.widget.TextView
         import androidx.recyclerview.widget.RecyclerView
 
-        class MessageAdapter(private val messages: MutableList<MessageModel>) :
-            RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
+        class MessageAdapter(
+            private val messages: MutableList<MessageModel>,
+            private val onReplay: (MessageModel) -> Unit,
+            private val onFullscreen: (MessageModel) -> Unit
+        ) : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
 
             class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val cardLayout: View = view.findViewById(R.id.cardLayout)
@@ -419,6 +665,8 @@ jobs:
                 val tvTime: TextView = view.findViewById(R.id.tvTime)
                 val tvOriginal: TextView = view.findViewById(R.id.tvOriginal)
                 val tvTranslated: TextView = view.findViewById(R.id.tvTranslated)
+                val btnReplay: Button = view.findViewById(R.id.btnReplay)
+                val btnFullscreen: Button = view.findViewById(R.id.btnFullscreen)
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -440,6 +688,14 @@ jobs:
                     holder.cardLayout.setBackgroundColor(Color.parseColor("#E3F2FD"))
                     holder.tvSender.setTextColor(Color.parseColor("#1565C0"))
                 }
+
+                holder.btnReplay.setOnClickListener {
+                    onReplay(item)
+                }
+
+                holder.btnFullscreen.setOnClickListener {
+                    onFullscreen(item)
+                }
             }
 
             override fun getItemCount() = messages.size
@@ -454,6 +710,8 @@ jobs:
                 messages.clear()
                 notifyItemRangeRemoved(0, count)
             }
+
+            fun getAllMessages(): List<MessageModel> = messages
 
             fun getAllText(): String {
                 val sb = StringBuilder()
@@ -471,6 +729,7 @@ jobs:
         package com.translator.serbia
 
         import android.Manifest
+        import android.app.Dialog
         import android.content.ClipData
         import android.content.ClipboardManager
         import android.content.Context
@@ -483,15 +742,21 @@ jobs:
         import android.os.Bundle
         import android.os.Handler
         import android.os.Looper
+        import android.os.VibrationEffect
+        import android.os.Vibrator
         import android.speech.RecognitionListener
         import android.speech.RecognizerIntent
         import android.speech.SpeechRecognizer
         import android.speech.tts.TextToSpeech
         import android.speech.tts.UtteranceProgressListener
+        import android.view.Gravity
         import android.view.KeyEvent
+        import android.view.ViewGroup
         import android.widget.Button
         import android.widget.CheckBox
         import android.widget.EditText
+        import android.widget.LinearLayout
+        import android.widget.ScrollView
         import android.widget.TextView
         import android.widget.Toast
         import androidx.appcompat.app.AppCompatActivity
@@ -524,6 +789,7 @@ jobs:
             private lateinit var etInput: EditText
             private lateinit var cbAutoListen: CheckBox
             private lateinit var btnDownloadOffline: Button
+            private lateinit var btnDictionary: Button
             private lateinit var btnMic: Button
             private lateinit var btnSendToSpeaker: Button
             private lateinit var btnSendToEarphone: Button
@@ -541,10 +807,8 @@ jobs:
             private var isRecording = false
             private val mainHandler = Handler(Looper.getMainLooper())
 
-            // Google ML Kit офлайн-переводчики
             private lateinit var ruToOfflineTranslator: Translator
             private lateinit var offlineToRuTranslator: Translator
-            private var isOfflineModelsReady = false
 
             private val REQUEST_PERMISSIONS = 101
 
@@ -557,6 +821,7 @@ jobs:
                 etInput = findViewById(R.id.etInput)
                 cbAutoListen = findViewById(R.id.cbAutoListen)
                 btnDownloadOffline = findViewById(R.id.btnDownloadOffline)
+                btnDictionary = findViewById(R.id.btnDictionary)
                 btnMic = findViewById(R.id.btnMic)
                 btnSendToSpeaker = findViewById(R.id.btnSendToSpeaker)
                 btnSendToEarphone = findViewById(R.id.btnSendToEarphone)
@@ -564,7 +829,11 @@ jobs:
                 btnCopy = findViewById(R.id.btnCopy)
                 btnClear = findViewById(R.id.btnClear)
 
-                adapter = MessageAdapter(messagesList)
+                adapter = MessageAdapter(
+                    messagesList,
+                    onReplay = { item -> replayMessage(item) },
+                    onFullscreen = { item -> showFullscreenMessage(item) }
+                )
                 rvMessages.layoutManager = LinearLayoutManager(this).apply {
                     stackFromEnd = true
                 }
@@ -574,9 +843,14 @@ jobs:
                 initTTS()
                 initSpeechRecognizer()
                 initOfflineTranslators()
+                setupQuickPhrases()
 
                 btnDownloadOffline.setOnClickListener {
                     downloadOfflineModels()
+                }
+
+                btnDictionary.setOnClickListener {
+                    showDictionaryDialog()
                 }
 
                 btnMic.setOnClickListener {
@@ -618,6 +892,218 @@ jobs:
                 }
             }
 
+            private fun setupQuickPhrases() {
+                val qpMap = mapOf(
+                    R.id.qp1 to Pair("Помоги поднять", "Помози ми да подигнем"),
+                    R.id.qp2 to Pair("Где инструмент?", "Где је алат?"),
+                    R.id.qp3 to Pair("Какой размер?", "Која је димензија?"),
+                    R.id.qp4 to Pair("Я закончил", "Ја сам завршио"),
+                    R.id.qp5 to Pair("Ещё раз", "Још једном, молим те"),
+                    R.id.qp6 to Pair("Спасибо", "Хвала пуно"),
+                    R.id.qp7 to Pair("Подожди минуту", "Сачекај минут"),
+                    R.id.qp8 to Pair("Где чертёж?", "Где је нацрт?")
+                )
+
+                for ((btnId, pair) in qpMap) {
+                    findViewById<Button>(btnId)?.setOnClickListener {
+                        val ruText = pair.first
+                        val srText = pair.second
+                        vibrateSuccess()
+                        addAndPlayDirect(ruText, srText, toSpeaker = true)
+                    }
+                }
+            }
+
+            private fun addAndPlayDirect(original: String, translated: String, toSpeaker: Boolean) {
+                val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+                val sender = if (toSpeaker) "Вы" else "Серб"
+                val msg = MessageModel(
+                    sender = sender,
+                    originalText = original,
+                    translatedText = translated,
+                    time = time,
+                    isFromSerb = !toSpeaker
+                )
+                adapter.addMessage(msg)
+                rvMessages.smoothScrollToPosition(adapter.itemCount - 1)
+
+                if (toSpeaker) {
+                    tvStatus.text = "Озвучиваю сербу в динамик..."
+                    playAudioToSpeaker(translated, "sr")
+                } else {
+                    tvStatus.text = "Озвучиваю в наушник..."
+                    playAudioToEarphone(translated, "ru")
+                }
+            }
+
+            private fun replayMessage(item: MessageModel) {
+                vibrateShort()
+                if (item.isFromSerb) {
+                    tvStatus.text = "Повтор в наушник: ${item.translatedText}"
+                    playAudioToEarphone(item.translatedText, "ru")
+                } else {
+                    tvStatus.text = "Повтор в динамик: ${item.translatedText}"
+                    playAudioToSpeaker(item.translatedText, "sr")
+                }
+            }
+
+            private fun showFullscreenMessage(item: MessageModel) {
+                vibrateShort()
+                val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+                val layout = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    setBackgroundColor(android.graphics.Color.parseColor("#0D47A1"))
+                    setPadding(32, 48, 32, 48)
+                    gravity = Gravity.CENTER
+                }
+
+                val tvSerb = TextView(this).apply {
+                    val serbText = if (item.isFromSerb) item.originalText else item.translatedText
+                    text = serbText
+                    textSize = 34f
+                    setTextColor(android.graphics.Color.WHITE)
+                    gravity = Gravity.CENTER
+                    setTypeface(null, android.graphics.Typeface.BOLD)
+                }
+
+                val tvRu = TextView(this).apply {
+                    val ruText = if (item.isFromSerb) item.translatedText else item.originalText
+                    text = "($ruText)"
+                    textSize = 18f
+                    setTextColor(android.graphics.Color.parseColor("#BBDEFB"))
+                    gravity = Gravity.CENTER
+                    setPadding(0, 24, 0, 36)
+                }
+
+                val btnSpeak = Button(this).apply {
+                    text = "🔊 Озвучить еще раз"
+                    textSize = 16f
+                    setBackgroundColor(android.graphics.Color.parseColor("#1565C0"))
+                    setTextColor(android.graphics.Color.WHITE)
+                    setOnClickListener {
+                        val serbText = if (item.isFromSerb) item.originalText else item.translatedText
+                        playAudioToSpeaker(serbText, "sr")
+                    }
+                }
+
+                val btnClose = Button(this).apply {
+                    text = "✕ Закрыть"
+                    textSize = 16f
+                    setBackgroundColor(android.graphics.Color.parseColor("#D32F2F"))
+                    setTextColor(android.graphics.Color.WHITE)
+                    setOnClickListener { dialog.dismiss() }
+                }
+
+                layout.addView(tvSerb)
+                layout.addView(tvRu)
+                layout.addView(btnSpeak)
+                layout.addView(btnClose)
+                dialog.setContentView(layout)
+                dialog.show()
+            }
+
+            private fun showDictionaryDialog() {
+                vibrateShort()
+                val dialog = Dialog(this)
+                dialog.setTitle("Словарь дня")
+
+                val root = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    setPadding(24, 24, 24, 24)
+                    setBackgroundColor(android.graphics.Color.WHITE)
+                }
+
+                val tvTitle = TextView(this).apply {
+                    text = "📖 Словарь дня (нажмите для озвучки):"
+                    textSize = 16f
+                    setTypeface(null, android.graphics.Typeface.BOLD)
+                    setTextColor(android.graphics.Color.parseColor("#212121"))
+                    setPadding(0, 0, 0, 16)
+                }
+                root.addView(tvTitle)
+
+                val scrollView = ScrollView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        800
+                    )
+                }
+                val listLayout = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                }
+
+                val all = adapter.getAllMessages()
+                if (all.isEmpty()) {
+                    val tvEmpty = TextView(this).apply {
+                        text = "Диалог пуст. Новые слова появятся здесь после разговоров."
+                        textSize = 14f
+                        setTextColor(android.graphics.Color.GRAY)
+                    }
+                    listLayout.addView(tvEmpty)
+                } else {
+                    for (m in all) {
+                        val serb = if (m.isFromSerb) m.originalText else m.translatedText
+                        val ru = if (m.isFromSerb) m.translatedText else m.originalText
+
+                        val itemBtn = Button(this).apply {
+                            text = "🇷🇸 $serb\n🇷🇺 $ru"
+                            textSize = 13f
+                            gravity = Gravity.START
+                            setBackgroundColor(android.graphics.Color.parseColor("#ECEFF1"))
+                            setTextColor(android.graphics.Color.parseColor("#263238"))
+                            setPadding(16, 12, 16, 12)
+                            val params = LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                            ).apply { setMargins(0, 4, 0, 4) }
+                            layoutParams = params
+
+                            setOnClickListener {
+                                vibrateShort()
+                                playAudioToSpeaker(serb, "sr")
+                            }
+                        }
+                        listLayout.addView(itemBtn)
+                    }
+                }
+
+                scrollView.addView(listLayout)
+                root.addView(scrollView)
+
+                val btnClose = Button(this).apply {
+                    text = "Закрыть"
+                    setBackgroundColor(android.graphics.Color.parseColor("#455A64"))
+                    setTextColor(android.graphics.Color.WHITE)
+                    setOnClickListener { dialog.dismiss() }
+                }
+                root.addView(btnClose)
+
+                dialog.setContentView(root)
+                dialog.show()
+            }
+
+            private fun vibrateShort() {
+                try {
+                    val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        v.vibrate(50)
+                    }
+                } catch (e: Exception) {}
+            }
+
+            private fun vibrateSuccess() {
+                try {
+                    val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        v.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 40, 60, 40), -1))
+                    } else {
+                        v.vibrate(longArrayOf(0, 40, 60, 40), -1)
+                    }
+                } catch (e: Exception) {}
+            }
+
             private fun initOfflineTranslators() {
                 val ruOptions = TranslatorOptions.Builder()
                     .setSourceLanguage(TranslateLanguage.RUSSIAN)
@@ -641,20 +1127,19 @@ jobs:
                     .addOnSuccessListener {
                         offlineToRuTranslator.downloadModelIfNeeded(conditions)
                             .addOnSuccessListener {
-                                isOfflineModelsReady = true
                                 btnDownloadOffline.text = "✓ Офлайн OK"
                                 btnDownloadOffline.isEnabled = true
-                                tvStatus.text = "Офлайн-модели успешно скачаны и готовы к работе!"
+                                tvStatus.text = "Офлайн-модели готовы к работе!"
                                 Toast.makeText(this, "Офлайн-модели готовы!", Toast.LENGTH_LONG).show()
                             }
                             .addOnFailureListener { e ->
                                 btnDownloadOffline.isEnabled = true
-                                tvStatus.text = "Ошибка скачивания: ${e.message}"
+                                tvStatus.text = "Ошибка: ${e.message}"
                             }
                     }
                     .addOnFailureListener { e ->
                         btnDownloadOffline.isEnabled = true
-                        tvStatus.text = "Ошибка скачивания: ${e.message}"
+                        tvStatus.text = "Ошибка: ${e.message}"
                     }
             }
 
@@ -765,6 +1250,7 @@ jobs:
                     return
                 }
 
+                vibrateShort()
                 isRecording = true
                 btnMic.text = "⏹️"
                 tvStatus.text = "Включение микрофона..."
@@ -858,6 +1344,7 @@ jobs:
                     tvStatus.text = "Перевожу..."
                     val (detectedLang, translatedText) = autoTranslate(text, forceToSpeaker, forceToEarphone)
 
+                    vibrateSuccess()
                     val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
                     val isFromMe = (detectedLang == "ru")
 
@@ -965,7 +1452,6 @@ jobs:
                 return Pair(detected, sb.toString())
             }
 
-            // ПРИНУДИТЕЛЬНЫЙ ВЫВОД В ДИНАМИК ТЕЛЕФОНА
             private fun playAudioToSpeaker(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -996,7 +1482,6 @@ jobs:
                 tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UTTERANCE_SPEAKER")
             }
 
-            // ПРИНУДИТЕЛЬНЫЙ ВЫВОД В НАУШНИК
             private fun playAudioToEarphone(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -1045,5 +1530,5 @@ jobs:
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: VoiceTranslator-v5-Offline-APK
+        name: VoiceTranslator-v6-Pro-APK
         path: app/build/outputs/apk/debug/app-debug.apk
