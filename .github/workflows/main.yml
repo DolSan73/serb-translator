@@ -158,7 +158,7 @@ jobs:
             android:orientation="vertical"
             android:background="#F0F2F5">
 
-            <!-- Верхняя панель -->
+            <!-- Верхняя строка: Заголовок и кнопки действий -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,44 +172,56 @@ jobs:
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Переводчик Сербия v5"
-                    android:textSize="16sp"
+                    android:text="🇷🇸 Переводчик v5"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:textColor="#212121" />
-
-                <CheckBox
-                    android:id="@+id/cbAutoListen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Авто-ответ"
-                    android:textSize="11sp"
-                    android:checked="true"
-                    android:textColor="#37474F"
-                    android:layout_marginEnd="4dp" />
 
                 <Button
                     android:id="@+id/btnDownloadOffline"
                     android:layout_width="wrap_content"
-                    android:layout_height="34dp"
+                    android:layout_height="36dp"
                     android:text="📥 Офлайн"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:layout_marginEnd="4dp"
                     android:backgroundTint="#546E7A" />
 
                 <Button
                     android:id="@+id/btnCopy"
                     android:layout_width="wrap_content"
-                    android:layout_height="34dp"
+                    android:layout_height="36dp"
                     android:text="Копия"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:layout_marginEnd="4dp" />
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="wrap_content"
-                    android:layout_height="34dp"
+                    android:layout_height="36dp"
                     android:text="Сброс"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Вторая строка: Переключатель авто-ответа -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="#ECEFF1"
+                android:gravity="center_vertical">
+
+                <CheckBox
+                    android:id="@+id/cbAutoListen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Авто-ответ (слушать сразу после озвучки)"
+                    android:textSize="12sp"
+                    android:checked="true"
+                    android:textColor="#37474F" />
             </LinearLayout>
 
             <!-- Строка статуса -->
@@ -563,12 +575,10 @@ jobs:
                 initSpeechRecognizer()
                 initOfflineTranslators()
 
-                // Кнопка скачивания офлайн-пакетов
                 btnDownloadOffline.setOnClickListener {
                     downloadOfflineModels()
                 }
 
-                // Кнопка микрофона
                 btnMic.setOnClickListener {
                     if (isRecording) {
                         stopRecording()
@@ -577,17 +587,14 @@ jobs:
                     }
                 }
 
-                // Кнопка: Я говорю (в динамик сербу)
                 btnSendToSpeaker.setOnClickListener {
                     processManualSend(forceToSpeaker = true, forceToEarphone = false)
                 }
 
-                // Кнопка: Серб говорит (в наушник мне)
                 btnSendToEarphone.setOnClickListener {
                     processManualSend(forceToSpeaker = false, forceToEarphone = true)
                 }
 
-                // Кнопка: Автоопределение языка
                 btnAutoTranslate.setOnClickListener {
                     processManualSend(forceToSpeaker = false, forceToEarphone = false)
                 }
@@ -877,7 +884,6 @@ jobs:
                 }
             }
 
-            // Умный перевод: Онлайн Google Translate + Офлайн Google ML Kit
             private suspend fun autoTranslate(text: String, forceToSpeaker: Boolean, forceToEarphone: Boolean): Pair<String, String> = withContext(Dispatchers.IO) {
                 try {
                     if (forceToSpeaker) {
