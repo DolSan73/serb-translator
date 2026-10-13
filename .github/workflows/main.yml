@@ -80,8 +80,8 @@ jobs:
                 applicationId "com.translator.serbia"
                 minSdk 26
                 targetSdk 34
-                versionCode 2
-                versionName "2.0"
+                versionCode 3
+                versionName "3.0"
             }
 
             buildTypes {
@@ -161,7 +161,7 @@ jobs:
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:background="#FFFFFF"
                 android:elevation="4dp"
                 android:gravity="center_vertical">
@@ -170,7 +170,7 @@ jobs:
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Переводчик Сербия v2"
+                    android:text="Переводчик Сербия v3"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:textColor="#212121" />
@@ -178,36 +178,17 @@ jobs:
                 <Button
                     android:id="@+id/btnCopy"
                     android:layout_width="wrap_content"
-                    android:layout_height="38dp"
+                    android:layout_height="36dp"
                     android:text="Копия"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:layout_marginEnd="4dp" />
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="wrap_content"
-                    android:layout_height="38dp"
+                    android:layout_height="36dp"
                     android:text="Сброс"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Кнопка авто-слушания -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:background="#E8EAF6"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnToggleAuto"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:text="🎙️ РЕЖИМ «СВОБОДНЫЕ РУКИ»: ВЫКЛ"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:backgroundTint="#455A64"
-                    android:textColor="#FFFFFF" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <!-- Строка статуса -->
@@ -215,14 +196,14 @@ jobs:
                 android:id="@+id/tvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:gravity="center"
-                android:text="Готов к работе. Скажите «Переведи ... всё» или нажмите кнопку."
+                android:text="Надиктуйте или введите текст для перевода."
                 android:textSize="13sp"
                 android:textColor="#37474F"
                 android:background="#CFD8DC" />
 
-            <!-- Список сообщений -->
+            <!-- История сообщений (диалог) -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMessages"
                 android:layout_width="match_parent"
@@ -231,23 +212,88 @@ jobs:
                 android:padding="8dp"
                 android:clipToPadding="false" />
 
-            <!-- Кнопки ручного управления -->
+            <!-- Блок ввода и редактирования текста -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp"
+                android:orientation="vertical"
                 android:background="#FFFFFF"
-                android:elevation="8dp">
+                android:elevation="8dp"
+                android:padding="8dp">
+
+                <!-- Поле ввода текста с кнопками микрофона и очистки -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="#EEEEEE"
+                    android:padding="6dp">
+
+                    <EditText
+                        android:id="@+id/etInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:minLines="2"
+                        android:maxLines="4"
+                        android:hint="Текст появится здесь (можно надиктовать или исправить клавиатурой)..."
+                        android:textSize="15sp"
+                        android:textColor="#212121"
+                        android:textColorHint="#757575"
+                        android:background="@null"
+                        android:padding="4dp" />
+
+                    <Button
+                        android:id="@+id/btnMic"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:text="🎙️"
+                        android:textSize="20sp"
+                        android:backgroundTint="#D32F2F"
+                        android:padding="0dp" />
+                </LinearLayout>
+
+                <!-- Кнопки отправки перевода -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+
+                    <Button
+                        android:id="@+id/btnSendToSpeaker"
+                        android:layout_width="0dp"
+                        android:layout_height="54dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="#1565C0"
+                        android:text="🇷🇺 В ДИНАМИК СЕРБУ&#10;(перевод на српски)"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <Button
+                        android:id="@+id/btnSendToEarphone"
+                        android:layout_width="0dp"
+                        android:layout_height="54dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:backgroundTint="#2E7D32"
+                        android:text="🇷🇸 МНЕ В НАУШНИК&#10;(перевод на русский)"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnAutoSpeak"
-                    android:layout_width="0dp"
-                    android:layout_height="68dp"
-                    android:layout_weight="1"
+                    android:id="@+id/btnAutoTranslate"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="4dp"
                     android:backgroundTint="#00897B"
-                    android:text="⚡ АВТО-ПЕРЕВОД (RU / SR)&#10;нажмите и говорите"
-                    android:textSize="13sp"
+                    android:text="⚡ АВТО-ОПРЕДЕЛЕНИЕ И ПЕРЕВОД"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
@@ -402,14 +448,13 @@ jobs:
         import android.media.AudioManager
         import android.os.Build
         import android.os.Bundle
-        import android.os.Handler
-        import android.os.Looper
         import android.speech.RecognitionListener
         import android.speech.RecognizerIntent
         import android.speech.SpeechRecognizer
         import android.speech.tts.TextToSpeech
         import android.speech.tts.UtteranceProgressListener
         import android.widget.Button
+        import android.widget.EditText
         import android.widget.TextView
         import android.widget.Toast
         import androidx.appcompat.app.AppCompatActivity
@@ -433,8 +478,11 @@ jobs:
 
             private lateinit var tvStatus: TextView
             private lateinit var rvMessages: RecyclerView
-            private lateinit var btnAutoSpeak: Button
-            private lateinit var btnToggleAuto: Button
+            private lateinit var etInput: EditText
+            private lateinit var btnMic: Button
+            private lateinit var btnSendToSpeaker: Button
+            private lateinit var btnSendToEarphone: Button
+            private lateinit var btnAutoTranslate: Button
             private lateinit var btnCopy: Button
             private lateinit var btnClear: Button
 
@@ -445,9 +493,7 @@ jobs:
             private var tts: TextToSpeech? = null
             private var isTtsReady = false
 
-            private var isContinuousListening = false
-            private var isCurrentlySpeaking = false
-            private val mainHandler = Handler(Looper.getMainLooper())
+            private var isRecording = false
 
             private val REQUEST_PERMISSIONS = 101
 
@@ -457,8 +503,11 @@ jobs:
 
                 tvStatus = findViewById(R.id.tvStatus)
                 rvMessages = findViewById(R.id.rvMessages)
-                btnAutoSpeak = findViewById(R.id.btnAutoSpeak)
-                btnToggleAuto = findViewById(R.id.btnToggleAuto)
+                etInput = findViewById(R.id.etInput)
+                btnMic = findViewById(R.id.btnMic)
+                btnSendToSpeaker = findViewById(R.id.btnSendToSpeaker)
+                btnSendToEarphone = findViewById(R.id.btnSendToEarphone)
+                btnAutoTranslate = findViewById(R.id.btnAutoTranslate)
                 btnCopy = findViewById(R.id.btnCopy)
                 btnClear = findViewById(R.id.btnClear)
 
@@ -472,19 +521,28 @@ jobs:
                 initTTS()
                 initSpeechRecognizer()
 
-                btnAutoSpeak.setOnClickListener {
-                    if (isContinuousListening) {
-                        stopContinuousListening()
+                // Кнопка микрофона (старт / стоп записи)
+                btnMic.setOnClickListener {
+                    if (isRecording) {
+                        stopRecording()
+                    } else {
+                        startRecording()
                     }
-                    startListeningOnce()
                 }
 
-                btnToggleAuto.setOnClickListener {
-                    if (isContinuousListening) {
-                        stopContinuousListening()
-                    } else {
-                        startContinuousListening()
-                    }
+                // Кнопка: Я говорю (русский -> сербский в динамик)
+                btnSendToSpeaker.setOnClickListener {
+                    processManualSend(forceToSpeaker = true, forceToEarphone = false)
+                }
+
+                // Кнопка: Серб говорит (сербский -> русский в наушник)
+                btnSendToEarphone.setOnClickListener {
+                    processManualSend(forceToSpeaker = false, forceToEarphone = true)
+                }
+
+                // Кнопка: Автоопределение языка
+                btnAutoTranslate.setOnClickListener {
+                    processManualSend(forceToSpeaker = false, forceToEarphone = false)
                 }
 
                 btnCopy.setOnClickListener {
@@ -501,6 +559,7 @@ jobs:
 
                 btnClear.setOnClickListener {
                     adapter.clearAll()
+                    etInput.setText("")
                     tvStatus.text = "История очищена."
                 }
             }
@@ -528,28 +587,16 @@ jobs:
                 }
 
                 tts?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-                    override fun onStart(utteranceId: String?) {
-                        isCurrentlySpeaking = true
-                    }
+                    override fun onStart(utteranceId: String?) {}
                     override fun onDone(utteranceId: String?) {
-                        isCurrentlySpeaking = false
                         runOnUiThread {
                             resetAudioRouting()
-                            if (isContinuousListening) {
-                                tvStatus.text = "Слушаю..."
-                                mainHandler.postDelayed({ restartListeningIfNeeded() }, 400)
-                            } else {
-                                tvStatus.text = "Готов к следующей фразе."
-                            }
+                            tvStatus.text = "Готов к следующей фразе."
                         }
                     }
                     override fun onError(utteranceId: String?) {
-                        isCurrentlySpeaking = false
                         runOnUiThread {
                             resetAudioRouting()
-                            if (isContinuousListening) {
-                                mainHandler.postDelayed({ restartListeningIfNeeded() }, 400)
-                            }
                         }
                     }
                 })
@@ -560,9 +607,7 @@ jobs:
                     speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
                     speechRecognizer?.setRecognitionListener(object : RecognitionListener {
                         override fun onReadyForSpeech(params: Bundle?) {
-                            if (!isCurrentlySpeaking) {
-                                tvStatus.text = if (isContinuousListening) "🎙️ СЛУШАЮ (свободные руки)..." else "🎙️ Слушаю речь..."
-                            }
+                            tvStatus.text = "🎙️ Говорите (текст пишется в поле)..."
                         }
                         override fun onBeginningOfSpeech() {
                             tvStatus.text = "Запись речи..."
@@ -570,97 +615,121 @@ jobs:
                         override fun onRmsChanged(rmsdB: Float) {}
                         override fun onBufferReceived(buffer: ByteArray?) {}
                         override fun onEndOfSpeech() {
-                            tvStatus.text = "Обработка..."
+                            tvStatus.text = "Пауза. Обработка слов..."
                         }
                         override fun onError(error: Int) {
-                            if (isContinuousListening && !isCurrentlySpeaking) {
-                                mainHandler.postDelayed({ restartListeningIfNeeded() }, 500)
-                            } else {
-                                tvStatus.text = "Пауза. Нажмите для записи."
-                            }
+                            isRecording = false
+                            btnMic.text = "🎙️"
+                            tvStatus.text = "Микрофон выключен. Можно отредактировать текст или нажать кнопку."
                         }
                         override fun onResults(results: Bundle?) {
+                            isRecording = false
+                            btnMic.text = "🎙️"
                             val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                             val recognized = matches?.firstOrNull() ?: ""
                             if (recognized.isNotBlank()) {
-                                handleRecognizedPhrase(recognized)
+                                handleVoiceInput(recognized)
                             } else {
-                                if (isContinuousListening && !isCurrentlySpeaking) {
-                                    mainHandler.postDelayed({ restartListeningIfNeeded() }, 400)
-                                }
+                                tvStatus.text = "Речь не распознана. Попробуйте еще раз."
                             }
                         }
-                        override fun onPartialResults(partialResults: Bundle?) {}
+                        override fun onPartialResults(partialResults: Bundle?) {
+                            val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                            val partial = matches?.firstOrNull() ?: ""
+                            if (partial.isNotBlank()) {
+                                tvStatus.text = "Слышу: $partial"
+                            }
+                        }
                         override fun onEvent(eventType: Int, params: Bundle?) {}
                     })
                 }
             }
 
-            private fun startContinuousListening() {
-                isContinuousListening = true
-                btnToggleAuto.text = "🛑 РЕЖИМ «СВОБОДНЫЕ РУКИ»: ВКЛ"
-                tvStatus.text = "Режим включен. Говорите «Переведи ... всё»"
-                restartListeningIfNeeded()
-            }
-
-            private fun stopContinuousListening() {
-                isContinuousListening = false
-                btnToggleAuto.text = "🎙️ РЕЖИМ «СВОБОДНЫЕ РУКИ»: ВЫКЛ"
-                tvStatus.text = "Режим выключен."
-                try {
-                    speechRecognizer?.stopListening()
-                } catch (e: Exception) {}
-            }
-
-            private fun restartListeningIfNeeded() {
-                if (!isContinuousListening || isCurrentlySpeaking) return
-                startListeningOnce()
-            }
-
-            private fun startListeningOnce() {
+            private fun startRecording() {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     checkPermissions()
                     return
                 }
+
+                isRecording = true
+                btnMic.text = "⏹️"
+                tvStatus.text = "Запуск микрофона..."
 
                 val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ru-RU")
                     putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ru-RU")
                     putStringArrayListExtra("android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES", arrayListOf("sr-RS", "ru-RU"))
+                    putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
                 }
 
                 try {
                     speechRecognizer?.startListening(intent)
                 } catch (e: Exception) {
+                    isRecording = false
+                    btnMic.text = "🎙️"
                     tvStatus.text = "Ошибка микрофона: ${e.message}"
                 }
             }
 
-            private fun handleRecognizedPhrase(rawText: String) {
-                var text = rawText.trim()
-                var isExplicitRussian = false
+            private fun stopRecording() {
+                isRecording = false
+                btnMic.text = "🎙️"
+                tvStatus.text = "Микрофон остановлен."
+                try {
+                    speechRecognizer?.stopListening()
+                } catch (e: Exception) {}
+            }
 
+            // Обработка распознанного голоса
+            private fun handleVoiceInput(rawText: String) {
+                var text = rawText.trim()
+                var isAutoTriggered = false
+
+                // Проверяем триггер-фразу «переведи»
                 val lower = text.lowercase(Locale.getDefault())
                 if (lower.startsWith("переведи") || lower.startsWith("перевести") || lower.startsWith("преведи")) {
-                    isExplicitRussian = true
+                    isAutoTriggered = true
                     text = text.replaceFirst(Regex("^(переведи|перевести|преведи)\\s*", RegexOption.IGNORE_CASE), "")
                 }
 
+                // Проверяем окончание фразы «всё» или «все»
                 if (text.lowercase(Locale.getDefault()).endsWith("всё") || text.lowercase(Locale.getDefault()).endsWith("все")) {
-                    isExplicitRussian = true
+                    isAutoTriggered = true
                     text = text.replace(Regex("\\s*(всё|все)$", RegexOption.IGNORE_CASE), "")
                 }
 
                 text = text.trim()
-                if (text.isBlank()) {
-                    if (isContinuousListening) restartListeningIfNeeded()
+
+                // Дописываем распознанный текст в поле ввода (чтобы не затирать, если человек говорит с паузами)
+                val currentInput = etInput.text.toString().trim()
+                val fullText = if (currentInput.isEmpty()) text else "$currentInput $text"
+                etInput.setText(fullText)
+                etInput.setSelection(fullText.length)
+
+                if (isAutoTriggered && fullText.isNotBlank()) {
+                    // Если была команда "переведи ... всё" -> сразу переводим и озвучиваем сербу
+                    tvStatus.text = "Голосовая команда распознана! Отправляю..."
+                    executeTranslation(fullText, forceToSpeaker = true, forceToEarphone = false)
+                } else {
+                    tvStatus.text = "Текст на экране. Можно исправить слова или нажать кнопку перевода."
+                }
+            }
+
+            // Ручная отправка текста из поля ввода
+            private fun processManualSend(forceToSpeaker: Boolean, forceToEarphone: Boolean) {
+                val text = etInput.text.toString().trim()
+                if (text.isEmpty()) {
+                    Toast.makeText(this, "Поле текста пусто! Надиктуйте или введите слова.", Toast.LENGTH_SHORT).show()
                     return
                 }
+                executeTranslation(text, forceToSpeaker, forceToEarphone)
+            }
 
+            private fun executeTranslation(text: String, forceToSpeaker: Boolean, forceToEarphone: Boolean) {
                 CoroutineScope(Dispatchers.Main).launch {
-                    tvStatus.text = "Анализирую и перевожу..."
-                    val (detectedLang, translatedText) = autoTranslate(text, isExplicitRussian)
+                    tvStatus.text = "Перевожу..."
+                    val (detectedLang, translatedText) = autoTranslate(text, forceToSpeaker, forceToEarphone)
 
                     val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
                     val isFromMe = (detectedLang == "ru")
@@ -676,23 +745,35 @@ jobs:
                     adapter.addMessage(msg)
                     rvMessages.smoothScrollToPosition(adapter.itemCount - 1)
 
+                    // Очищаем поле ввода для следующей фразы
+                    etInput.setText("")
+
                     if (isFromMe) {
+                        // Русский -> сербский в ДИНАМИК ТЕЛЕФОНА
                         tvStatus.text = "Озвучиваю сербу в динамик..."
                         playAudioToSpeaker(translatedText, "sr")
                     } else {
-                        tvStatus.text = "Перевод вам в наушник..."
+                        // Сербский -> русский ТОЛЬКО В НАУШНИК
+                        tvStatus.text = "Озвучиваю перевод вам в наушник..."
                         playAudioToEarphone(translatedText, "ru")
                     }
                 }
             }
 
-            private suspend fun autoTranslate(text: String, isExplicitRussian: Boolean): Pair<String, String> = withContext(Dispatchers.IO) {
+            private suspend fun autoTranslate(text: String, forceToSpeaker: Boolean, forceToEarphone: Boolean): Pair<String, String> = withContext(Dispatchers.IO) {
                 try {
-                    if (isExplicitRussian) {
+                    if (forceToSpeaker) {
+                        // Принудительно: Я говорю (RU -> SR)
                         val tr = translateQuery(text, "ru", "sr")
                         return@withContext Pair("ru", tr.second)
                     }
+                    if (forceToEarphone) {
+                        // Принудительно: Серб говорит (SR -> RU)
+                        val tr = translateQuery(text, "sr", "ru")
+                        return@withContext Pair("sr", tr.second)
+                    }
 
+                    // Автоопределение
                     val first = translateQuery(text, "auto", "sr")
                     val detected = first.first
 
@@ -703,7 +784,7 @@ jobs:
                         Pair("sr", second.second)
                     }
                 } catch (e: Exception) {
-                    Pair("ru", "Ошибка: ${e.message}")
+                    Pair("ru", "Ошибка перевода: ${e.message}")
                 }
             }
 
@@ -732,13 +813,16 @@ jobs:
                 return Pair(detected, sb.toString())
             }
 
+            // ПРИНУДИТЕЛЬНЫЙ ВЫВОД В ДИНАМИК ТЕЛЕФОНА
             private fun playAudioToSpeaker(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
+                // 1. Режим голосовой связи и принудительный громкоговоритель
                 audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
                 audioManager.isSpeakerphoneOn = true
 
+                // 2. Для Android 12+ принудительно назначаем BUILTIN_SPEAKER
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     val speaker = audioManager.availableCommunicationDevices.firstOrNull {
                         it.type == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER
@@ -748,6 +832,7 @@ jobs:
                     }
                 }
 
+                // 3. Задаем атрибуты голосовой связи
                 val audioAttributes = AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -758,42 +843,30 @@ jobs:
                     putInt("streamType", AudioManager.STREAM_VOICE_CALL)
                 }
 
-                tts?.language = Locale(lang, if (lang == "sr") "RS" else "RU")
+                tts?.language = Locale("sr", "RS")
                 tts?.speak(text, TextToSpeech.QUEUE_FLUSH, params, "UTTERANCE_SPEAKER")
             }
 
+            // ПРИНУДИТЕЛЬНЫЙ ВЫВОД В НАУШНИК
             private fun playAudioToEarphone(text: String, lang: String) {
                 if (!isTtsReady) return
                 val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-                audioManager.isSpeakerphoneOn = false
-
+                // 1. Сбрасываем режим связи и выключаем громкоговоритель
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    val headset = audioManager.availableCommunicationDevices.firstOrNull {
-                        it.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO ||
-                        it.type == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP ||
-                        it.type == AudioDeviceInfo.TYPE_BLE_HEADSET ||
-                        it.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
-                        it.type == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
-                    }
-                    if (headset != null) {
-                        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-                        audioManager.setCommunicationDevice(headset)
-                    } else {
-                        audioManager.clearCommunicationDevice()
-                        audioManager.mode = AudioManager.MODE_NORMAL
-                    }
-                } else {
-                    audioManager.mode = AudioManager.MODE_NORMAL
+                    audioManager.clearCommunicationDevice()
                 }
+                audioManager.isSpeakerphoneOn = false
+                audioManager.mode = AudioManager.MODE_NORMAL
 
+                // 2. В обычном режиме (MODE_NORMAL) Android всегда направляет USAGE_MEDIA в подключенный наушник
                 val audioAttributes = AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                     .build()
                 tts?.setAudioAttributes(audioAttributes)
 
-                tts?.language = Locale(lang, if (lang == "sr") "RS" else "RU")
+                tts?.language = Locale("ru", "RU")
                 tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "UTTERANCE_EARPHONE")
             }
 
@@ -807,7 +880,7 @@ jobs:
             }
 
             override fun onDestroy() {
-                stopContinuousListening()
+                stopRecording()
                 speechRecognizer?.destroy()
                 tts?.stop()
                 tts?.shutdown()
