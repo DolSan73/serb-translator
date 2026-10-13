@@ -1,4 +1,4 @@
-name: Build Voice Translator APK
+name: Build Voice Translator v5 Offline APK
 
 on:
   push:
@@ -80,8 +80,8 @@ jobs:
                 applicationId "com.translator.serbia"
                 minSdk 26
                 targetSdk 34
-                versionCode 4
-                versionName "4.0"
+                versionCode 5
+                versionName "5.0"
             }
 
             buildTypes {
@@ -108,6 +108,8 @@ jobs:
             implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
             implementation 'androidx.recyclerview:recyclerview:1.3.2'
             implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+            implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
+            implementation 'com.google.mlkit:translate:17.0.3'
         }
         EOF
 
@@ -161,7 +163,7 @@ jobs:
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:background="#FFFFFF"
                 android:elevation="4dp"
                 android:gravity="center_vertical">
@@ -170,8 +172,8 @@ jobs:
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Переводчик Сербия v4"
-                    android:textSize="17sp"
+                    android:text="Переводчик Сербия v5"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#212121" />
 
@@ -183,22 +185,31 @@ jobs:
                     android:textSize="11sp"
                     android:checked="true"
                     android:textColor="#37474F"
-                    android:layout_marginEnd="6dp" />
+                    android:layout_marginEnd="4dp" />
+
+                <Button
+                    android:id="@+id/btnDownloadOffline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="📥 Офлайн"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="4dp"
+                    android:backgroundTint="#546E7A" />
 
                 <Button
                     android:id="@+id/btnCopy"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="34dp"
                     android:text="Копия"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:layout_marginEnd="4dp" />
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_height="34dp"
                     android:text="Сброс"
-                    android:textSize="11sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <!-- Строка статуса -->
@@ -208,7 +219,7 @@ jobs:
                 android:layout_height="wrap_content"
                 android:padding="6dp"
                 android:gravity="center"
-                android:text="Скажите «Переведи» (сербу) или «Преведи / Превести» (в наушник)."
+                android:text="Готов. Онлайн и офлайн режим активны."
                 android:textSize="12sp"
                 android:textColor="#37474F"
                 android:background="#CFD8DC" />
@@ -476,9 +487,15 @@ jobs:
         import androidx.core.content.ContextCompat
         import androidx.recyclerview.widget.LinearLayoutManager
         import androidx.recyclerview.widget.RecyclerView
+        import com.google.mlkit.common.model.DownloadConditions
+        import com.google.mlkit.nl.translate.TranslateLanguage
+        import com.google.mlkit.nl.translate.Translation
+        import com.google.mlkit.nl.translate.Translator
+        import com.google.mlkit.nl.translate.TranslatorOptions
         import kotlinx.coroutines.CoroutineScope
         import kotlinx.coroutines.Dispatchers
         import kotlinx.coroutines.launch
+        import kotlinx.coroutines.tasks.await
         import kotlinx.coroutines.withContext
         import org.json.JSONArray
         import java.net.HttpURLConnection
@@ -494,6 +511,7 @@ jobs:
             private lateinit var rvMessages: RecyclerView
             private lateinit var etInput: EditText
             private lateinit var cbAutoListen: CheckBox
+            private lateinit var btnDownloadOffline: Button
             private lateinit var btnMic: Button
             private lateinit var btnSendToSpeaker: Button
             private lateinit var btnSendToEarphone: Button
@@ -511,6 +529,11 @@ jobs:
             private var isRecording = false
             private val mainHandler = Handler(Looper.getMainLooper())
 
+            // Google ML Kit офлайн-переводчики
+            private lateinit var ruToOfflineTranslator: Translator
+            private lateinit var offlineToRuTranslator: Translator
+            private var isOfflineModelsReady = false
+
             private val REQUEST_PERMISSIONS = 101
 
             override fun onCreate(savedInstanceState: Bundle?) {
@@ -521,6 +544,7 @@ jobs:
                 rvMessages = findViewById(R.id.rvMessages)
                 etInput = findViewById(R.id.etInput)
                 cbAutoListen = findViewById(R.id.cbAutoListen)
+                btnDownloadOffline = findViewById(R.id.btnDownloadOffline)
                 btnMic = findViewById(R.id.btnMic)
                 btnSendToSpeaker = findViewById(R.id.btnSendToSpeaker)
                 btnSendToEarphone = findViewById(R.id.btnSendToEarphone)
@@ -537,8 +561,14 @@ jobs:
                 checkPermissions()
                 initTTS()
                 initSpeechRecognizer()
+                initOfflineTranslators()
 
-                // Кнопка микрофона (старт / стоп записи)
+                // Кнопка скачивания офлайн-пакетов
+                btnDownloadOffline.setOnClickListener {
+                    downloadOfflineModels()
+                }
+
+                // Кнопка микрофона
                 btnMic.setOnClickListener {
                     if (isRecording) {
                         stopRecording()
@@ -547,12 +577,12 @@ jobs:
                     }
                 }
 
-                // Кнопка: Я говорю (русский -> сербский в динамик)
+                // Кнопка: Я говорю (в динамик сербу)
                 btnSendToSpeaker.setOnClickListener {
                     processManualSend(forceToSpeaker = true, forceToEarphone = false)
                 }
 
-                // Кнопка: Серб говорит (сербский -> русский в наушник)
+                // Кнопка: Серб говорит (в наушник мне)
                 btnSendToEarphone.setOnClickListener {
                     processManualSend(forceToSpeaker = false, forceToEarphone = true)
                 }
@@ -581,7 +611,46 @@ jobs:
                 }
             }
 
-            // Управление кнопкой на Bluetooth-наушнике
+            private fun initOfflineTranslators() {
+                val ruOptions = TranslatorOptions.Builder()
+                    .setSourceLanguage(TranslateLanguage.RUSSIAN)
+                    .setTargetLanguage(TranslateLanguage.CROATIAN)
+                    .build()
+                ruToOfflineTranslator = Translation.getClient(ruOptions)
+
+                val srOptions = TranslatorOptions.Builder()
+                    .setSourceLanguage(TranslateLanguage.CROATIAN)
+                    .setTargetLanguage(TranslateLanguage.RUSSIAN)
+                    .build()
+                offlineToRuTranslator = Translation.getClient(srOptions)
+            }
+
+            private fun downloadOfflineModels() {
+                tvStatus.text = "⏳ Скачивание офлайн-моделей (~30 МБ)..."
+                btnDownloadOffline.isEnabled = false
+                val conditions = DownloadConditions.Builder().build()
+
+                ruToOfflineTranslator.downloadModelIfNeeded(conditions)
+                    .addOnSuccessListener {
+                        offlineToRuTranslator.downloadModelIfNeeded(conditions)
+                            .addOnSuccessListener {
+                                isOfflineModelsReady = true
+                                btnDownloadOffline.text = "✓ Офлайн OK"
+                                btnDownloadOffline.isEnabled = true
+                                tvStatus.text = "Офлайн-модели успешно скачаны и готовы к работе!"
+                                Toast.makeText(this, "Офлайн-модели готовы!", Toast.LENGTH_LONG).show()
+                            }
+                            .addOnFailureListener { e ->
+                                btnDownloadOffline.isEnabled = true
+                                tvStatus.text = "Ошибка скачивания: ${e.message}"
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        btnDownloadOffline.isEnabled = true
+                        tvStatus.text = "Ошибка скачивания: ${e.message}"
+                    }
+            }
+
             override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
                 if (keyCode == KeyEvent.KEYCODE_HEADSETHOOK ||
                     keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE ||
@@ -624,7 +693,6 @@ jobs:
                     override fun onDone(utteranceId: String?) {
                         runOnUiThread {
                             resetAudioRouting()
-                            // Если включен чекбокс «Авто-ответ», микрофон автоматически включается для следующего говорящего
                             if (cbAutoListen.isChecked) {
                                 tvStatus.text = "Озвучено. Жду ответ..."
                                 mainHandler.postDelayed({ startRecording() }, 600)
@@ -720,22 +788,18 @@ jobs:
                 } catch (e: Exception) {}
             }
 
-            // Анализ и распознавание голосовых команд («переведи» / «преведи» / «превести»)
             private fun handleVoiceInput(rawText: String) {
                 val (cleanedText, toSpeaker, toEarphone) = parseVoiceCommands(rawText)
 
-                // Дописываем слова в поле ввода на экране
                 val current = etInput.text.toString().trim()
                 val fullText = if (current.isEmpty()) cleanedText else "$current $cleanedText"
                 etInput.setText(fullText)
                 etInput.setSelection(fullText.length)
 
                 if (toSpeaker && fullText.isNotBlank()) {
-                    // Распознано русское слово «переведи» -> кнопка «В динамик сербу»
                     tvStatus.text = "Команда «Переведи»! Озвучиваю сербу..."
                     executeTranslation(fullText, forceToSpeaker = true, forceToEarphone = false)
                 } else if (toEarphone && fullText.isNotBlank()) {
-                    // Распознано сербское слово «преведи / превести» -> кнопка «Мне в наушник»
                     tvStatus.text = "Команда «Преведи»! Озвучиваю в наушник..."
                     executeTranslation(fullText, forceToSpeaker = false, forceToEarphone = true)
                 } else {
@@ -743,13 +807,11 @@ jobs:
                 }
             }
 
-            // Выделение команд перевода и очистка текста от них
             private fun parseVoiceCommands(raw: String): Triple<String, Boolean, Boolean> {
                 var text = raw.trim()
                 var toSpeaker = false
                 var toEarphone = false
 
-                // 1. Сербские триггеры: преведи, превести, превод, prevedi, prevesti, prevod
                 val serbStart = Regex("^(преведи|превести|превод|prevedi|prevesti|prevod)\\s+", RegexOption.IGNORE_CASE)
                 val serbEnd = Regex("\\s+(преведи|превести|превод|prevedi|prevesti|prevod)$", RegexOption.IGNORE_CASE)
 
@@ -761,7 +823,6 @@ jobs:
                     text = text.replace(serbEnd, "")
                 }
 
-                // 2. Русские триггеры: переведи, перевести, перевод, всё
                 val ruStart = Regex("^(переведи|перевести|перевод)\\s+", RegexOption.IGNORE_CASE)
                 val ruEnd = Regex("\\s+(переведи|перевести|перевод|всё|все)$", RegexOption.IGNORE_CASE)
 
@@ -807,17 +868,16 @@ jobs:
                     etInput.setText("")
 
                     if (isFromMe) {
-                        // Русский -> сербский в ДИНАМИК ТЕЛЕФОНА
                         tvStatus.text = "Озвучиваю сербу в динамик..."
                         playAudioToSpeaker(translatedText, "sr")
                     } else {
-                        // Сербский -> русский ТОЛЬКО В НАУШНИК
                         tvStatus.text = "Озвучиваю перевод вам в наушник..."
                         playAudioToEarphone(translatedText, "ru")
                     }
                 }
             }
 
+            // Умный перевод: Онлайн Google Translate + Офлайн Google ML Kit
             private suspend fun autoTranslate(text: String, forceToSpeaker: Boolean, forceToEarphone: Boolean): Pair<String, String> = withContext(Dispatchers.IO) {
                 try {
                     if (forceToSpeaker) {
@@ -833,14 +893,45 @@ jobs:
                     val detected = first.first
 
                     if (detected == "ru") {
-                        Pair("ru", first.second)
+                        return@withContext Pair("ru", first.second)
                     } else {
                         val second = translateQuery(text, "sr", "ru")
-                        Pair("sr", second.second)
+                        return@withContext Pair("sr", second.second)
                     }
                 } catch (e: Exception) {
-                    Pair("ru", "Ошибка перевода: ${e.message}")
+                    return@withContext translateOffline(text, forceToSpeaker, forceToEarphone)
                 }
+            }
+
+            private suspend fun translateOffline(text: String, forceToSpeaker: Boolean, forceToEarphone: Boolean): Pair<String, String> {
+                return try {
+                    if (forceToSpeaker) {
+                        val res = ruToOfflineTranslator.translate(text).await()
+                        Pair("ru", res)
+                    } else if (forceToEarphone) {
+                        val res = offlineToRuTranslator.translate(text).await()
+                        Pair("sr", res)
+                    } else {
+                        val isRu = isRussianInput(text)
+                        if (isRu) {
+                            val res = ruToOfflineTranslator.translate(text).await()
+                            Pair("ru", res)
+                        } else {
+                            val res = offlineToRuTranslator.translate(text).await()
+                            Pair("sr", res)
+                        }
+                    }
+                } catch (e: Exception) {
+                    Pair("ru", "Офлайн-модель не скачана. Нажмите «📥 Офлайн». (${e.message})")
+                }
+            }
+
+            private fun isRussianInput(text: String): Boolean {
+                val lower = text.lowercase(Locale.getDefault())
+                if (lower.any { it in "ыэъё" }) return true
+                if (lower.any { it in "јљњћђџ" }) return false
+                if (lower.any { it in 'a'..'z' || it in "čćžšđ" }) return false
+                return true
             }
 
             private fun translateQuery(text: String, sl: String, tl: String): Pair<String, String> {
@@ -849,8 +940,8 @@ jobs:
                 val conn = URL(urlString).openConnection() as HttpURLConnection
                 conn.requestMethod = "GET"
                 conn.setRequestProperty("User-Agent", "Mozilla/5.0")
-                conn.connectTimeout = 6000
-                conn.readTimeout = 6000
+                conn.connectTimeout = 4000
+                conn.readTimeout = 4000
 
                 val resp = conn.inputStream.bufferedReader().use { it.readText() }
                 val root = JSONArray(resp)
@@ -934,6 +1025,8 @@ jobs:
                 speechRecognizer?.destroy()
                 tts?.stop()
                 tts?.shutdown()
+                ruToOfflineTranslator.close()
+                offlineToRuTranslator.close()
                 resetAudioRouting()
                 super.onDestroy()
             }
@@ -946,5 +1039,5 @@ jobs:
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: VoiceTranslator-APK
+        name: VoiceTranslator-v5-Offline-APK
         path: app/build/outputs/apk/debug/app-debug.apk
